@@ -11,3 +11,43 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+
+pub struct Order {
+    product_name: String,
+    quantity: usize,
+    unit_price: usize, // cents
+}
+
+impl Order {
+    pub fn total(&self) -> usize {
+        self.quantity * self.unit_price
+    }
+    pub fn new(product_name: String, quantity: usize, unit_price: usize) -> Self {
+        if product_name.is_empty() || product_name.len() > 300 || quantity < 1 || unit_price < 1 {
+            panic!("uh oh");
+        }
+        Order {
+            product_name,
+            quantity,
+            unit_price,
+        }
+    }
+    pub fn product_name(&self) -> &str {
+        &self.product_name
+    }
+    pub fn quantity(&self) -> &usize {
+        &self.quantity
+    }
+    pub fn unit_price(&self) -> &usize {
+        &self.unit_price
+    }
+    pub fn set_product_name(&mut self, x: String) {
+        self.product_name = x
+    }
+    pub fn set_quantity(&mut self, x: usize) {
+        self.quantity = x
+    }
+    pub fn set_unit_price(&mut self, x: usize) {
+        self.unit_price = x
+    }
+}
